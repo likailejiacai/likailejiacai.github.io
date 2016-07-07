@@ -1,0 +1,32 @@
+<extend name="Public:base"/>
+<block name="right">
+    <h3>编辑用户</h3>
+    <form action="{:U('Admin/editUser',array('id'=>$userInf['id']))}" method="post" enctype="multipart/form-data">
+        <table class="table table-striped table-hover">
+            <tr>
+                <td align="right">用户名</td>
+                <td><input type="text" name="username" placeholder="{$userInf.username}"/></td>
+            </tr>
+            <tr>
+                <td align="right">密码</td>
+                <td><input type="password" name="password"/></td>
+            </tr>
+            <tr>
+                <td align="right">邮箱</td>
+                <td><input type="text" name="email" placeholder="{$userInf.email}"/></td>
+
+            </tr>
+            <tr>
+                <td align="right">性别</td>
+                <td><input type="radio" name="sex" value="1"  <eq name="userInf.sex" value="1">checked="checked"</eq>/>男
+                    <input type="radio" name="sex" value="2"<eq name="userInf.sex" value="2">checked="checked"</eq> />女
+                    <input type="radio" name="sex" value="3" <eq name="userInf.sex" value="3">checked="checked"</eq> />保密
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" class="btn btn-default" value="编辑用户"/></td>
+            </tr>
+
+        </table>
+    </form>
+</block>

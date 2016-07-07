@@ -1,0 +1,14 @@
+<extend name="Public:base"/>
+<block name="right">
+
+    <h3>添加分类</h3>
+    <form action="{:U('Admin/addCate')}" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">cName</label>
+            <input type="text" class="form-control" id="cName" placeholder="cName" name="cName">
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+</block>

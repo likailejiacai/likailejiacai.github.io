@@ -1,0 +1,51 @@
+<extend name="Public:base"/>
+<block name="right">
+    <body>
+
+    <div class="details">
+
+        <!--表格-->
+        <table class="table table-striped table-hover" cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th width="10%">编号</th>
+                <th width="20%">商品名称</th>
+                <th>商品图片</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="datas" item="pro">
+            <tr>
+                <!--这里的id和for里面的c1 需要循环出来-->
+                <td><input  type="checkbox" id="c{$pro.id}" class="check" value="{$pro.id}"><label for="c1" class="label">{$pro.id}</label></td>
+
+                <td>{$pro.pname}</td>
+                <td>
+                    <foreach name="pro.album" item="imgAddr">
+                    <img width="100" height="100" src="/Public/uploads/{$imgAddr.albumpath}" alt=""/> &nbsp;&nbsp;
+            </foreach>
+                </td>
+                <td>
+
+                    <a  class="btn btn-default" href="{:U('Admin/addWaterText',array('id'=>$pro['id']))}" >添加文字水印</a>
+
+                    <br/>
+                    <a  class="btn btn-default" href="{:U('Admin/addWaterPic',array('id'=>$pro['id']))}" >添加图片水印</a>
+                </td>
+
+
+
+
+            </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+        function doImg(id,act){
+            window.location="doAdminAction.php?act="+act+"&id="+id;
+        }
+    </script>
+    </body>
+</block>

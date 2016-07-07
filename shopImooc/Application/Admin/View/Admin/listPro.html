@@ -1,0 +1,187 @@
+<extend name="Public:base"/>
+<block name="right">
+
+<body>
+<div id="showDetail"  style="display:none;">
+
+</div>
+<div class="details">
+    <div class="details_operation clearfix">
+        <div class="bui_select">
+            <input type="button" value="添&nbsp;&nbsp;加" class="add" onclick="addPro()">
+        </div>
+        <div class="fr">
+            <div class="text">
+                <span>商品价格：</span>
+                <div class="bui_select">
+                    <select id="" class="select" onchange="change(this.value)">
+                        <option>-请选择-</option>
+                        <option value="iPrice asc" >由低到高</option>
+                        <option value="iPrice desc">由高到底</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text">
+                <span>上架时间：</span>
+                <div class="bui_select">
+                    <select id="" class="select" onchange="change(this.value)">
+                        <option>-请选择-</option>
+                        <option value="pubTime desc" >>最新发布</option>
+                        <option value="pubTime asc">历史发布</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text">
+                <span>搜索</span>
+                <input type="text" value="" class="search"  id="search" onkeypress="search()" >
+            </div>
+        </div>
+    </div>
+    <!--表格-->
+    <table class=" table table-striped table-hover" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th width="10%">编号</th>
+            <th width="20%">商品名称</th>
+            <th width="10%">商品分类</th>
+            <th width="10%">是否上架</th>
+            <th width="15%">上架时间</th>
+            <th width="10%">慕课价格</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="Pro" item="pro">
+        <tr>
+            <!--这里的id和for里面的c1 需要循环出来-->
+            <td><input type="checkbox" id="c<?php echo $row['id'];?>" class="check" value='{$pro.id}'><label for="c1" class="label">{$pro.id}</label></td>
+            <td>{$pro.pname}</td>
+            <td>{$pro.cname}</td>
+            <td>
+                <eq name="pro.isshow" value="1">
+                    上架
+                    <else/>
+                    下架
+                </eq>
+            </td>
+            <td>{$pro['pubtime']|date="y-m-d H:i:s",###}</td>
+            <td>{$pro.iprice}元</td>
+            <td align="center">
+                <input type="button" value="详情" class="btn" onclick="showDetail({$pro.id},'{$pro.pname}')">
+                <!--<input type="button" value="修改" class="btn" onclick="editPro('{$pro.id}')">        -->
+                <a class="btn btn-default" role="button" href="{:U('Admin/editPro',array('id'=>$pro['id']))}">编辑</a>
+                <input type="button" value="删除" class="btn"onclick="delPro('{$pro.id}')">
+                <!--<a class="btn btn-default" role="button" href="{:U('Admin/deletePro',array('id'=>$pro['id']))}">删除</a>-->
+                <div id="showDetail{$pro.id}" style="display:none;">
+                    <table class="table " cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="20%" align="right">商品名称</td>
+                            <td>{$pro.pname}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%"  align="right">商品类别</td>
+                            <td>{$pro.cname}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%"  align="right">商品货号</td>
+                            <td>{$pro.psn}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%"  align="right">商品数量</td>
+                            <td>{$pro.pnum}</td>
+                        </tr>
+                        <tr>
+                            <td  width="20%"  align="right">商品价格</td>
+                            <td>{$pro.mprice}</td>
+                        </tr>
+                        <tr>
+                            <td  width="20%"  align="right">幕课网价格</td>
+                            <td>{$pro.iprice}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%"  align="right">商品图片</td>
+                            <td>
+                            <foreach name="imgAddr" item="img">
+
+                                <eq name="img.pid" value="$pro.id">
+                                    <img width="100" height="100" src="/Public/Uploads/image_350/{$img.albumpath}" alt=""/> &nbsp;&nbsp;</eq>
+                            </foreach>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%"  align="right">是否上架</td>
+                            <td>
+                                <eq name="pro.isshow" value="1">
+                                    上架
+                                    <else/>
+                                    下架
+                                </eq>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%"  align="right">是否热卖</td>
+                            <td>
+                                <eq name="pro.ishot" value="1">
+                                    热卖
+                                    <else/>
+                                    正常
+                                </eq>
+                            </td>
+                        </tr>
+                    </table>
+					                        	<span style="display:block;width:80%; ">
+					                        	商品描述<br/>
+                                                   {$pro.pdesc}
+					                        	</span>
+                </div>
+
+            </td>
+        </tr>
+        </foreach>
+
+        <tr>
+            <td colspan="7">{$page}</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+    <script >
+        function showDetail(id,t){
+            $("#showDetail"+id).dialog({
+                height:"auto",
+                width: "auto",
+                position: {my: "center", at: "center",  collision:"fit"},
+                modal:false,//是否模式对话框
+                draggable:true,//是否允许拖拽
+                resizable:true,//是否允许拖动
+                title:"商品名称："+t,//对话框标题
+                show:"slide",
+                hide:"explode"
+            });
+        }
+        function addPro(){
+            window.location='addPro.php';
+        }
+        function editPro(id){
+            window.location='editPro.php?id='+id;
+        }
+        function delPro(id){
+            if(window.confirm("您确认要删除嘛？添加一次不易，且删且珍惜!")){
+                window.location="/index.php/Admin/Admin/deletePro/id/"+id;
+            }
+        }
+        function search(){
+            if(event.keyCode==13){
+                var val=document.getElementById("search").value;
+                window.location="/index.php/Admin/Admin/listPro/keywords/"+val;
+            }
+        }
+        function change(val){
+
+            window.location="/index.php/Admin/Admin/listPro/order/"+val;
+        }
+    </script>
+    </block>

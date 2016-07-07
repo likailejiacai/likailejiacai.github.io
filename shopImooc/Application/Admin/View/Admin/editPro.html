@@ -1,0 +1,57 @@
+<extend name="Public:base"/>
+<block name="right">
+    <h3>添加商品</h3>
+    <form action="{:U('Admin/editPro',array('id'=>$pro['id']))}" method="post" enctype="multipart/form-data">
+        <table class="table table-striped table-hover">
+            <tr>
+                <td align="right">商品名称</td>
+                <td><input type="text" name="pName"  placeholder="{$pro.pname}"/></td>
+            </tr>
+            <tr>
+                <td align="right">商品分类</td>
+                <td>
+                    <select name="cId">
+                        <foreach name="cateInf" item="cate">
+                            <option name='cid' value="{$cate.id}">{$cate.cname}</option>
+                        </foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">商品货号</td>
+                <td><input type="text" name="pSn"  placeholder="{$pro.psn}"/></td>
+            </tr>
+            <tr>
+                <td align="right">商品数量</td>
+                <td><input type="text" name="pNum"  placeholder="{$pro.pnum}"/></td>
+            </tr>
+            <tr>
+                <td align="right">商品市场价</td>
+                <td><input type="text" name="mPrice"  placeholder="{$pro.mprice}"/></td>
+            </tr>
+            <tr>
+                <td align="right">商品慕课价</td>
+                <td><input type="text" name="iPrice"  placeholder="{$pro.iprice}"/></td>
+            </tr>
+            <tr>
+                <td align="right">商品描述</td>
+                <td>
+                    <textarea name="pDesc" id="editor_id" style="width:100%;height:150px;">{$pro.pdesc}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">商品图像</td>
+                <td>
+                    <input type='file'  name='photo[]'>
+                    <input type='file'  name='photo[]'>
+                    <input type='file'  name='photo[]'>
+                    <div id="attachList" class="clear"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" class="btn btn-default" value="编辑商品"/></td>
+            </tr>
+        </table>
+    </form>
+    </body>
+</block>
