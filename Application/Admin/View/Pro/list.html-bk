@@ -1,9 +1,0 @@
-<volist name="list" id="vo">
-  <tr>
-    
-
-    <td> {$vo.td}</td> 
-    <td>{$vo.pname}</td> 
-    <td>{$vo.psn}</td>
-  </tr>
-</volist>
